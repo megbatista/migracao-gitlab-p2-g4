@@ -19,6 +19,8 @@ var PrivmsgChannel = require('./comandos/privmsg-channel');
 //var Part = require('./comandos/part');
 var executarComandoInvite = require('./comandos/invite');
 var executarComandoWhois = require('./comandos/whois');
+var executarComandoIson = require('./comandos/ison');
+
 
 io.use(socketio_cookieParser); //usa esse processador de cookies dentro do socketio
 //configuranco dos middlewares do express
@@ -122,6 +124,11 @@ io.on('connection', function (socket) {
 	irc_client.addListener('whois', function(info)
 	{
 		socket.emit('whois', info);
+	});	
+
+	irc_client.addListener('ison', function(info)
+	{
+		socket.emit('ison', info);
 	});
 
 	irc_client.addListener('message', function(nick, to, text, msg){
@@ -178,6 +185,8 @@ io.on('connection', function (socket) {
 				case '/WHOIS': executarComandoWhois(comando[1],client);
 				break;
 
+				case '/ISON': executarComandoIson(comando,client.nick,client);
+				break;
 			}
 
 		}
