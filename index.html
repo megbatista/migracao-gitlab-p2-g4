@@ -84,6 +84,10 @@
 					iosocket.on('invite', function(msg){
 						$('#mural').append(msg.from + ' te convidou para o canal ' + msg.canal + '<br>');
 					});
+
+					iosocket.on('ison', function(info){
+						$('#mural').append(info+'<br>');
+					});
 					
 					iosocket.on('whois',function(info){
 						
